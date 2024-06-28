@@ -54,7 +54,10 @@ class _ApiPracticeTwoState extends State<ApiPracticeTwo> {
                           leading: CircleAvatar(
                             backgroundImage: NetworkImage(photoList[index].url),
                           ),
-                          title: Text('Notes ID: ${photoList[index].id}'),
+                          title: Text(
+                            'Notes ID: ${photoList[index].id}',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                           subtitle: Text(photoList[index].title.toString()),
                         );
                       });
