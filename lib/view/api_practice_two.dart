@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
 import 'package:http/http.dart' as http;
 
 class ApiPracticeTwo extends StatefulWidget {
@@ -56,7 +56,7 @@ class _ApiPracticeTwoState extends State<ApiPracticeTwo> {
                           ),
                           title: Text(
                             'Notes ID: ${photoList[index].id}',
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                           subtitle: Text(photoList[index].title.toString()),
                         );
