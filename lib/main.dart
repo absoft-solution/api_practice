@@ -1,4 +1,5 @@
 import 'package:api_practice/view/POST%20API/sign_up_api.dart';
+import 'package:api_practice/view/POST%20API/upload_image.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const SignUpApi(),
+      home: const UploadImage(),
     );
   }
 }
