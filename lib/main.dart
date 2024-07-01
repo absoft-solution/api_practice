@@ -1,8 +1,4 @@
-import 'package:api_practice/view/api_practice_four.dart';
-
-import 'package:api_practice/view/api_practice_one.dart';
-import 'package:api_practice/view/api_practice_three.dart';
-
+import 'package:api_practice/view/POST%20API/sign_up_api.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -21,7 +17,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const ApiPracticeFour(),
+      home: const SignUpApi(),
     );
   }
 }
