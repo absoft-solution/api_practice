@@ -20,27 +20,37 @@ class _UploadImageState extends State<UploadImage> {
   Future getImage() async {
     final pickedFile =
         await _picker.pickImage(source: ImageSource.gallery, imageQuality: 80);
-    if (pickedFile == null) {
-      image = File(pickedFile!.path);
+    if (pickedFile != null) {
+      setState(() {
+        image = File(pickedFile.path);
+      });
     } else {
-      print("Not Selected");
+      print("No image selected");
     }
   }
 
   Future<void> uploadImage() async {
-    setState(() {});
-    var stream = new http.ByteStream(image!.openRead());
-    var lenght = await image!.length();
-    var request = new http.MultipartRequest(
+    setState(() {
+      showSpinner = true;
+    });
+
+    var stream = http.ByteStream(image!.openRead());
+    var length = await image!.length();
+    var request = http.MultipartRequest(
         'POST', Uri.parse("https://fakestoreapi.com/products"));
-    var multiport = new http.MultipartFile('image', stream, lenght);
-    request.files.add(multiport);
+    var multipartFile = http.MultipartFile('image', stream, length);
+    request.files.add(multipartFile);
+
     var response = await request.send();
     if (response.statusCode == 200) {
-      setState(() {});
-      showSpinner = false;
+      setState(() {
+        showSpinner = false;
+      });
       print("Uploaded");
     } else {
+      setState(() {
+        showSpinner = false;
+      });
       print("Not uploaded");
     }
   }
@@ -49,35 +59,52 @@ class _UploadImageState extends State<UploadImage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          GestureDetector(
-            onTap: () {
-              getImage();
-            },
-            child: Container(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            GestureDetector(
+              onTap: () {
+                getImage();
+              },
+              child: Container(
+                height: 300,
+                width: 300,
+                color: Colors.blue,
                 child: image == null
-                    ? Text("Pick Image")
-                    : Container(
-                        child: Image.file(
-                          height: 100,
-                          width: 100,
-                          File(image!.path).absolute,
-                          fit: BoxFit.cover,
-                        ),
-                      )),
-          ),
-          GestureDetector(
-            onTap: () {
-              uploadImage();
-            },
-            child: Container(
-              child: Text("Upload"),
+                    ? Center(
+                        child: Text("Pick Image",
+                            style: TextStyle(color: Colors.white)))
+                    : Image.file(
+                        File(image!.path).absolute,
+                        fit: BoxFit.cover,
+                      ),
+              ),
             ),
-          )
-        ],
+            SizedBox(
+              height: 20,
+            ),
+            GestureDetector(
+              onTap: () {
+                uploadImage();
+              },
+              child: Container(
+                height: 50,
+                width: 200,
+                color: Colors.blue,
+                child: Center(
+                  child: Text(
+                    "Upload",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
+            if (showSpinner) SizedBox(height: 20), // Space before spinner
+            if (showSpinner) CircularProgressIndicator(),
+          ],
+        ),
       ),
     );
   }
